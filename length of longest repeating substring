@@ -1,0 +1,21 @@
+import java.util.*;
+class Main {
+    public static void main(String[] args) {
+       Scanner sc=new Scanner(System.in);
+       String s1=sc.nextLine();
+       String s2=sc.nextLine();
+       int r=s2.length();
+       int c=s1.length();
+       int[][] dp=new int[r+1][c+1];
+       int max=0;
+       for(int i=1;i<=r;i++){
+           for(int j=1;j<=c;j++){
+               if(s2.charAt(i-1)==s1.charAt(j-1)){
+               dp[i][j]=1+dp[i-1][j-1];
+               max=Math.max(max,dp[i][j]);
+           }
+           }
+       }
+       System.out.println(max);
+    }
+}
