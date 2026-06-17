@@ -1,0 +1,52 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int k = sc.nextInt();
+        int q = sc.nextInt();
+
+        int MAX = 200000;
+
+        int[] diff = new int[MAX + 2];
+
+        // Difference array
+        for (int i = 0; i < n; i++) {
+            int l = sc.nextInt();
+            int r = sc.nextInt();
+
+            diff[l]++;
+            diff[r + 1]--;
+        }
+
+        // Coverage count
+        int[] cover = new int[MAX + 1];
+        cover[1] = diff[1];
+
+        for (int i = 2; i <= MAX; i++) {
+            cover[i] = cover[i - 1] + diff[i];
+        }
+
+        // Admissible temperatures prefix sum
+        int[] pref = new int[MAX + 1];
+
+        for (int i = 1; i <= MAX; i++) {
+            pref[i] = pref[i - 1];
+            if (cover[i] >= k) {
+                pref[i]++;
+            }
+        }
+
+        // Queries
+        while (q-- > 0) {
+            int a = sc.nextInt();
+            int b = sc.nextInt();
+
+            System.out.println(pref[b] - pref[a - 1]);
+        }
+
+        sc.close();
+    }
+}
